@@ -1,8 +1,8 @@
 #include "Utils.h"
 #include <nlohmann/json.hpp>
 
-typedef void(__fastcall* TArrayResizeGrow_t)(TArray<FString>& out, int32_t size);
-TArrayResizeGrow_t TArrayResizeGrow;
+typedef void(__fastcall* TArray_ResizeGrow_t)(TArray<FString>& out, int32_t size);
+TArray_ResizeGrow_t TArray_ResizeGrow;
 
 typedef void(__fastcall* FString_t)(FString& a1, const char* Str);
 FString_t FString_Init;
@@ -68,7 +68,7 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
 
         if (out.Count > out.Max)
         {
-            TArrayResizeGrow(out, out.Count);
+            TArray_ResizeGrow(out, out.Count);
         }
 
         out.Data[Counter].Data = Costume.Data;
@@ -83,9 +83,9 @@ void Setup()
 {
     BYTE* Orig_GetValidTargetPlatforms = PatternScan("48 89 5C 24 08 57 48 83 EC ? 48 8B D9 48 8D 15 ? ? ? ? 48 8D 4C 24 20");
     FString_Init = reinterpret_cast<FString_t>(PatternScan("48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 48 89 7C 24 20 41 56 48 83 EC ? 33 ED 48 8B DA 48 89 29"));
-    TArrayResizeGrow = reinterpret_cast<TArrayResizeGrow_t>(GetAddressFromInstruction((uintptr_t)Orig_GetValidTargetPlatforms + 0x32, 5));
+    TArray_ResizeGrow = reinterpret_cast<TArray_ResizeGrow_t>(GetAddressFromInstruction((uintptr_t)Orig_GetValidTargetPlatforms + 0x32, 5));
 
-    if (!Orig_GetValidTargetPlatforms || !FString_Init || !TArrayResizeGrow)
+    if (!Orig_GetValidTargetPlatforms || !FString_Init || !TArray_ResizeGrow)
     {
         return;
     }
