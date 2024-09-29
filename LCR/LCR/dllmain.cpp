@@ -14,7 +14,7 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
 
     std::string target_extension = ".json";
 
-    const std::filesystem::path CostumesPath = L"../../Content/Costumes/";
+    const std::filesystem::path CostumesPath = L"../../Content/Reglamour/costumes/";
 
     for (const std::filesystem::directory_entry& entry : std::filesystem::recursive_directory_iterator(CostumesPath))
     {
