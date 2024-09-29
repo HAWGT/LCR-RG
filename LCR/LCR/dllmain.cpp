@@ -14,7 +14,7 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
 
     std::string target_extension = ".json";
 
-    const std::filesystem::path CostumesPath = L"../../Content/Costumes/";
+    const std::filesystem::path CostumesPath = L"../../Content/ReGlamour/costumes";
 
     for (const std::filesystem::directory_entry& entry : std::filesystem::recursive_directory_iterator(CostumesPath))
     {
@@ -29,7 +29,7 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
         {
             nlohmann::json Data = nlohmann::json::parse(CostumeInfoFile);
 
-            if (Data["name"].is_string() && Data["guid"].is_string() && Data["type"].is_string() && Data["category"].is_string() && Data["battleMesh"].is_string() && Data["cineMesh"].is_string())
+            if (Data["name"].is_string() && Data["guid"].is_string() && Data["category"].is_string() && Data["battleMesh"].is_string() && Data["cineMesh"].is_string())
             {
                 std::string JName, JGUID, JType, JCategory, JBattleMesh, JCineMesh;
                 FString Name, GUID, Type, Category, BattleMesh, CineMesh;
@@ -37,7 +37,7 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
                 //lib things
                 JName = Data["name"];
                 JGUID = Data["guid"];
-                JType = Data["type"];
+                JType = Data["type"].is_string() ? Data["type"] : "costume";
                 JCategory = Data["category"];
                 JBattleMesh = Data["battleMesh"];
                 JCineMesh = Data["cineMesh"];
