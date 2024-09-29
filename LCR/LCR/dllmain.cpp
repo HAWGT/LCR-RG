@@ -29,15 +29,14 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
         {
             nlohmann::json Data = nlohmann::json::parse(CostumeInfoFile);
 
-            if (Data["name"].is_string() && Data["guid"].is_string() && Data["type"].is_string() && Data["category"].is_string() && Data["battleMesh"].is_string() && Data["cineMesh"].is_string())
+            if (Data["name"].is_string() && Data["guid"].is_string() && Data["category"].is_string() && Data["battleMesh"].is_string() && Data["cineMesh"].is_string())
             {
-                std::string JName, JGUID, JType, JCategory, JBattleMesh, JCineMesh;
-                FString Name, GUID, Type, Category, BattleMesh, CineMesh;
+                std::string JName, JGUID, JCategory, JBattleMesh, JCineMesh;
+                FString Name, GUID, Category, BattleMesh, CineMesh;
 
                 //lib things
                 JName = Data["name"];
                 JGUID = Data["guid"];
-                JType = Data["type"];
                 JCategory = Data["category"];
                 JBattleMesh = Data["battleMesh"];
                 JCineMesh = Data["cineMesh"];
@@ -45,14 +44,12 @@ void __fastcall hk_GetValidTargetPlatforms(TArray<FString>& out)
                 //Need to use the internal FString constructor because UE will call FMemory::Free and the pointer needs to be stored internally
                 FString_Init(Name, JName.c_str());
                 FString_Init(GUID, JGUID.c_str());
-                FString_Init(Type, JType.c_str());
                 FString_Init(Category, JCategory.c_str());
                 FString_Init(BattleMesh, JBattleMesh.c_str());
                 FString_Init(CineMesh, JCineMesh.c_str());
 
                 Costumes.push_back(Name);
                 Costumes.push_back(GUID);
-                Costumes.push_back(Type);
                 Costumes.push_back(Category);
                 Costumes.push_back(BattleMesh);
                 Costumes.push_back(CineMesh);
